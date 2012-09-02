@@ -1,4 +1,4 @@
-HTTP Video Player
+Simple Video Player
 =====
 
 This is a simple MP4 video player designed to make it easy to embed videos into other sites where you might not have complete control over HTML5 video elements. Instead, you can simply embed this page on your site and host your MP4 files anywhere else, like S3 or Dropbox. It's written in PHP since PHP is available nearly everywhere.
