@@ -11,6 +11,7 @@
   <head>
     <title>Video Player</title>
     <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script src="http://vjs.zencdn.net/c/video.js"></script>
   </head>
   <body>
@@ -23,13 +24,16 @@
     
     $currentUrl = $protocol . '://' . $host . $script . '?' . $params;
   
-    $mp4url = $_GET["mp4url"];
+    $mp4url = (urldecode($_GET["mp4url"]));
+    
     $width = $_GET["width"];
     $height = $_GET["height"]; 
     ?>
 
     <?php if (isset($_GET["debug"])){ ?>
-      <p>Video URL: <?php echo $url; ?>
+      <p><?php echo $myArray[0]; ?>
+      <p>Params: <?php echo $params; ?>
+      <p>Video URL: <?php echo $mp4url; ?>
       <p>Video dimensions: <?php echo $width; ?> by <?php echo $height; ?>
     <?php } ?>
 
@@ -49,11 +53,36 @@
         <p>Pass the URL in as a query parameter to use it. You can also pass the <code>width</code> and <code>height</code> parameters. </p>
         <pre>?mp4url=http://some/video.mp4&width=320&height=240
         </pre>
-        <p>The best way to use this would be to put it in an IFRAME.</p>
-        <textarea cols="80" rows="10"><iframe width="640" height="480" src="<?php echo $currentUrl; ?>mp4url=http://some/video.mp4&width=320&height=240"></iframe></textarea>
+        <p>The best way to use this would be to put it in an IFRAME. Use this form to build your IFRAME:</p>
+        
+        <form id="editor">
+          <label>URL to video <input type="url" id="mp4"></label>
+          <label>width <input value="640" type="number" id="width"></label>
+          <label>height <input value="480" type="number" id="height"></label>
+          <input type="submit">
+          <textarea id="code" cols="80" rows="10"><iframe width="640" height="480" src="<?php echo $currentUrl; ?>mp4url=http://some/video.mp4&width=640&height=480"></iframe></textarea>
+        </form>
+        <script>
+          $("#editor").submit(function(e){
+            e.preventDefault();
+            console.log("hi");
+            var code = $("#code");
+            var mp4 = $("#mp4").val();
+            var width = $("#width").val();
+            var height = $("#height").val();
+            var output = '<iframe width="' + width + '" height="' + height + '" src="' + document.location + '?mp4url=' + mp4 + '&width=' + width + '&height=' + height + '"><\/iframe>';
+            code.html(output);
+          });
+        </script>
+
+
+
         <p>Powered by HTML5 and <a href="http://videojs.com/">VideoJS</a>.</p>
+      <p><small>Version 0.2</small></p>
+      <p><a href="https://github.com/napcs/simplevideoplayer">Source at Github</a></p>
+      
       </div>
-      <small>Version 0.1</small>
+      
     <?php } ?>
 
   </body>

@@ -24,6 +24,12 @@ Todo
 ----
 * Support WebM. Patches welcome please.
 
+History
+------
+
+v0.2 - Added a form to make building the IFRAME easier.
+v0.1 - Initial version
+
 License
 -----
 
