@@ -25,38 +25,73 @@
     $currentUrl = $protocol . '://' . $host . $script . '?' . $params;
   
     $mp4url = (urldecode($_GET["mp4url"]));
-    
+    if (isset($_GET["webmurl"])){
+      $webmurl = (urldecode($_GET["webmurl"]));
+    }   
+
+
     $width = $_GET["width"];
     $height = $_GET["height"]; 
+    
     ?>
-
+    
+    
     <?php if (isset($_GET["debug"])){ ?>
-      <p><?php echo $myArray[0]; ?>
-      <p>Params: <?php echo $params; ?>
-      <p>Video URL: <?php echo $mp4url; ?>
-      <p>Video dimensions: <?php echo $width; ?> by <?php echo $height; ?>
+      <p><?php echo $myArray[0]; ?></p>
+      <p>Params: <?php echo $params; ?></p>
+      <p>MP4 URL: <?php echo $mp4url; ?></p>
+      <p>WebM URL: <?php echo $webmurl; ?></p>
+      <p>Video dimensions: <?php echo $width; ?> by <?php echo $height; ?></p>
+      <p>Settings <?php echo $setup; ?></p>
+      
     <?php } ?>
 
     <?php if (isset($_GET["mp4url"])){ ?>
-      <video id="player" class="video-js vjs-default-skin" 
+
+        <video id="player" class="video-js vjs-default-skin" 
             controls preload="auto" 
             width="<?php echo $width; ?>" height="<?php echo $height; ?>" 
             poster="my_video_poster.png"
-            data-setup="{}">
-          <source src="<?php echo $mp4url; ?>" type='video/mp4'>
-      </video> 
+            data-setup='{}'>
+            <source src="<?php echo $mp4url; ?>" type='video/mp4'>
+            <?php if (isset($webmurl)){ ?>
+              <source src="<?php echo $webmurl; ?>" type='video/webm'>
+            <? } ?>
+        </video> 
+        
+        <?php if( !isset($webmurl)){?>
+          <script>
+            var v = document.createElement("video");
+            if(v.canPlayType){
+              if (v.canPlayType("video/mp4") === ""){
+                _V_("player", {"techOrder": ["flash","html5"]});
+              };
+            }
+          </script>
+        <?php } ?>
     <?php }else{ ?>
       <h2>Simple Video Player</h2>
       <div style="width:640px;">
-        <p>This is a simple video player designed to make it easy to embed videos into other sites where you might not have complete control over HTML5 video elements. Instead, you can simply embed this page on your site and host your MP4 files anywhere else, like S3 or Dropbox.</p>
+        <p>
+          This is a simple video player designed to make it easy to embed
+          videos into other sites where you might not have complete control
+          over HTML5 video elements. Instead, you can simply embed this page
+          on your site and host your MP4 files anywhere else, like S3 or
+          Dropbox.
+        </p>
         <h3>Usage</h3>
         <p>Pass the URL in as a query parameter to use it. You can also pass the <code>width</code> and <code>height</code> parameters. </p>
-        <pre>?mp4url=http://some/video.mp4&width=320&height=240
+        <pre>
+          ?mp4url=http://some/video.mp4&amp;width=320&amp;height=240
         </pre>
-        <p>The best way to use this would be to put it in an IFRAME. Use this form to build your IFRAME:</p>
+        <p>The best way to use this would be to put it in an IFRAME. Use this form to build your <code>iframe</code>:</p>
         
         <form id="editor">
-          <label>URL to video <input type="url" id="mp4"></label>
+          <label>URL to MP4 video <input type="url" id="mp4"></label>
+          <br>
+          <label>URL to WebM video <input type="url" id="webm"></label>
+          <br>
+          
           <label>width <input value="640" type="number" id="width"></label>
           <label>height <input value="480" type="number" id="height"></label>
           <input type="submit">
@@ -66,11 +101,19 @@
           $("#editor").submit(function(e){
             e.preventDefault();
             console.log("hi");
+
             var code = $("#code");
             var mp4 = $("#mp4").val();
+            var webm = $("#mp4").val();
             var width = $("#width").val();
             var height = $("#height").val();
-            var output = '<iframe width="' + width + '" height="' + height + '" src="' + document.location + '?mp4url=' + mp4 + '&width=' + width + '&height=' + height + '"><\/iframe>';
+            var output = '<iframe width="' + width + '" height="' + height + '" src="' + document.location + '?mp4url=' + mp4;
+            
+            if(webm){
+              output += '&webmurl=' + webm;
+            }
+            
+            output += '&width=' + width + '&height=' + height'"><\/iframe>';
             code.html(output);
           });
         </script>
@@ -78,7 +121,7 @@
 
 
         <p>Powered by HTML5 and <a href="http://videojs.com/">VideoJS</a>.</p>
-      <p><small>Version 0.2</small></p>
+      <p><small>Version 0.3</small></p>
       <p><a href="https://github.com/napcs/simplevideoplayer">Source at Github</a></p>
       
       </div>

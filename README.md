@@ -20,13 +20,16 @@ The best way to use this would be to put it in an IFRAME.
       src="http://example.com/path/to/player/index.php?mp4url=http://some/video.mp4&width=320&height=240">
     </iframe>
 
-Todo
-----
-* Support WebM. Patches welcome please.
+
+WebM Support
+-----
+
+Pass in the `webmrul` parameter with the path to your WebM video.
+
 
 History
 ------
-
+v0.3 - Added WebM support
 v0.2 - Added a form to make building the IFRAME easier.
 v0.1 - Initial version
 
