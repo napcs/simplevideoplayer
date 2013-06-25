@@ -24,12 +24,13 @@ The best way to use this would be to put it in an IFRAME.
 WebM Support
 -----
 
-Pass in the `webmrul` parameter with the path to your WebM video.
+Pass in the `webmrul` parameter with the path to your WebM video. If you only put the MP4 file in,  then it'll check to see if the browser supports MP4. If
+it doesn't then it'll load a Flash-based player.
 
 
 History
 ------
-v0.3 - Added WebM support
+v0.3 - Added WebM support and forced Flash fallback if WebM is not sent in.
 v0.2 - Added a form to make building the IFRAME easier.
 v0.1 - Initial version
 

@@ -10,9 +10,9 @@
 <html lang="en">
   <head>
     <title>Video Player</title>
-    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <link href="http://vjs.zencdn.net/4.0/video-js.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://vjs.zencdn.net/4.0/video.js"></script>
   </head>
   <body>
     <?php
@@ -64,7 +64,7 @@
             var v = document.createElement("video");
             if(v.canPlayType){
               if (v.canPlayType("video/mp4") === ""){
-                _V_("player", {"techOrder": ["flash","html5"]});
+                videojs("player", {"techOrder": ["flash","html5"]});
               };
             }
           </script>
@@ -100,7 +100,6 @@
         <script>
           $("#editor").submit(function(e){
             e.preventDefault();
-            console.log("hi");
 
             var code = $("#code");
             var mp4 = $("#mp4").val();
@@ -113,7 +112,8 @@
               output += '&webmurl=' + webm;
             }
             
-            output += '&width=' + width + '&height=' + height'"><\/iframe>';
+            output += '&width=' + width + '&height=' + height + '"><\/iframe>';
+
             code.html(output);
           });
         </script>
