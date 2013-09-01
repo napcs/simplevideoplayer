@@ -30,6 +30,7 @@ it doesn't then it'll load a Flash-based player.
 
 History
 ------
+v0.4 - Uses VideoJS 4.1. Fixed putting in WebM url if it's blank. Removed forced flash support when WebM is not available as it appears VideoJS 4 does detection for us.
 v0.3 - Added WebM support and forced Flash fallback if WebM is not sent in.
 v0.2 - Added a form to make building the IFRAME easier.
 v0.1 - Initial version
@@ -37,7 +38,7 @@ v0.1 - Initial version
 License
 -----
 
-Copyright (C) 2012 Brian P. Hogan
+Copyright (C) 2012-2013 Brian P. Hogan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

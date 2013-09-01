@@ -10,9 +10,9 @@
 <html lang="en">
   <head>
     <title>Video Player</title>
-    <link href="http://vjs.zencdn.net/4.0/video-js.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://vjs.zencdn.net/4.0/video.js"></script>
+    <link href="https://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="https://vjs.zencdn.net/4.1/video.js"></script>
   </head>
   <body>
     <?php
@@ -51,7 +51,6 @@
         <video id="player" class="video-js vjs-default-skin" 
             controls preload="auto" 
             width="<?php echo $width; ?>" height="<?php echo $height; ?>" 
-            poster="my_video_poster.png"
             data-setup='{}'>
             <source src="<?php echo $mp4url; ?>" type='video/mp4'>
             <?php if (isset($webmurl)){ ?>
@@ -59,16 +58,6 @@
             <? } ?>
         </video> 
         
-        <?php if( !isset($webmurl)){?>
-          <script>
-            var v = document.createElement("video");
-            if(v.canPlayType){
-              if (v.canPlayType("video/mp4") === ""){
-                videojs("player", {"techOrder": ["flash","html5"]});
-              };
-            }
-          </script>
-        <?php } ?>
     <?php }else{ ?>
       <h2>Simple Video Player</h2>
       <div style="width:640px;">
@@ -108,7 +97,7 @@
             var height = $("#height").val();
             var output = '<iframe width="' + width + '" height="' + height + '" src="' + document.location + '?mp4url=' + mp4;
             
-            if(webm){
+            if(!webm === ""){
               output += '&webmurl=' + webm;
             }
             
@@ -121,7 +110,7 @@
 
 
         <p>Powered by HTML5 and <a href="http://videojs.com/">VideoJS</a>.</p>
-      <p><small>Version 0.3</small></p>
+      <p><small>Version 0.4</small></p>
       <p><a href="https://github.com/napcs/simplevideoplayer">Source at Github</a></p>
       
       </div>
