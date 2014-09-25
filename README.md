@@ -30,6 +30,7 @@ it doesn't then it'll load a Flash-based player.
 
 History
 ------
+v0.5 - Uses VideoJS 4.3. Removed additional padding added around the video. Embeds nicer now.
 v0.4 - Uses VideoJS 4.1. Fixed putting in WebM url if it's blank. Removed forced flash support when WebM is not available as it appears VideoJS 4 does detection for us.
 v0.3 - Added WebM support and forced Flash fallback if WebM is not sent in.
 v0.2 - Added a form to make building the IFRAME easier.

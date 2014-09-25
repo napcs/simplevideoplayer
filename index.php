@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   MP4 Video Player 
-  Copyright (C) 2012 Brian P. Hogan
+  Copyright (C) 2012-2014 Brian P. Hogan
   License: MIT
   URL: http://github.com/napcs/simplevideoplayer
   Usage: Host on your server, pass it videos. Invoke without params for
@@ -10,9 +10,19 @@
 <html lang="en">
   <head>
     <title>Video Player</title>
-    <link href="https://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="https://vjs.zencdn.net/4.1/video.js"></script>
+    <script src="https://vjs.zencdn.net/4.3/video.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .video-js p {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <?php
@@ -28,7 +38,6 @@
     if (isset($_GET["webmurl"])){
       $webmurl = (urldecode($_GET["webmurl"]));
     }   
-
 
     $width = $_GET["width"];
     $height = $_GET["height"]; 
@@ -47,16 +56,15 @@
     <?php } ?>
 
     <?php if (isset($_GET["mp4url"])){ ?>
-
-        <video id="player" class="video-js vjs-default-skin" 
-            controls preload="auto" 
-            width="<?php echo $width; ?>" height="<?php echo $height; ?>" 
-            data-setup='{}'>
-            <source src="<?php echo $mp4url; ?>" type='video/mp4'>
-            <?php if (isset($webmurl)){ ?>
-              <source src="<?php echo $webmurl; ?>" type='video/webm'>
-            <? } ?>
-        </video> 
+      <video id="player" class="video-js vjs-default-skin" 
+          controls preload="auto" 
+          width="<?php echo $width; ?>" height="<?php echo $height; ?>" 
+          data-setup='{}'>
+          <source src="<?php echo $mp4url; ?>" type='video/mp4'>
+          <?php if (isset($webmurl)){ ?>
+            <source src="<?php echo $webmurl; ?>" type='video/webm'>
+          <? } ?>
+      </video> 
         
     <?php }else{ ?>
       <h2>Simple Video Player</h2>
@@ -84,24 +92,28 @@
           <label>width <input value="640" type="number" id="width"></label>
           <label>height <input value="480" type="number" id="height"></label>
           <input type="submit">
-          <textarea id="code" cols="80" rows="10"><iframe width="640" height="480" src="<?php echo $currentUrl; ?>mp4url=http://some/video.mp4&width=640&height=480"></iframe></textarea>
+          <textarea id="code" cols="80" rows="10"><iframe width="640" height="480" allowfullscreen src="<?php echo $currentUrl; ?>mp4url=http://some/video.mp4&width=640&height=480"></iframe></textarea>
         </form>
         <script>
           $("#editor").submit(function(e){
             e.preventDefault();
 
-            var code = $("#code");
-            var mp4 = $("#mp4").val();
-            var webm = $("#mp4").val();
-            var width = $("#width").val();
-            var height = $("#height").val();
+            var code, height, width, mp4, videoheight, videowidth, webm, width;
+            code = $("#code");
+            mp4 = $("#mp4").val();
+            webm = $("#mp4").val();
+            height = $("#height").val();
+            width = $("#width").val();
+            videoheight = height;
+            videowidth = width;
+            
             var output = '<iframe width="' + width + '" height="' + height + '" src="' + document.location + '?mp4url=' + mp4;
             
             if(!webm === ""){
               output += '&webmurl=' + webm;
             }
             
-            output += '&width=' + width + '&height=' + height + '"><\/iframe>';
+            output += '&width=' + videowidth + '&height=' + videoheight + '"><\/iframe>';
 
             code.html(output);
           });
@@ -110,7 +122,7 @@
 
 
         <p>Powered by HTML5 and <a href="http://videojs.com/">VideoJS</a>.</p>
-      <p><small>Version 0.4</small></p>
+      <p><small>Version 0.5</small></p>
       <p><a href="https://github.com/napcs/simplevideoplayer">Source at Github</a></p>
       
       </div>
